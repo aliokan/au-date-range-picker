@@ -10,17 +10,8 @@ module('Integration | Component | au-date-range-picker', function (hooks) {
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.set('myAction', function(val) { ... });
 
-    await render(hbs`<AuDateRangePicker />`);
+    await render(hbs`<AuDateRangePicker @label="Pick A Date Range"/>`);
 
-    assert.dom(this.element).hasText('');
-
-    // Template block usage:
-    await render(hbs`
-      <AuDateRangePicker>
-        template block text
-      </AuDateRangePicker>
-    `);
-
-    assert.dom(this.element).hasText('template block text');
+    assert.dom(this.element).hasText('Pick A Date Range');
   });
 });

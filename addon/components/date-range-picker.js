@@ -2,7 +2,6 @@
 /* eslint-disable ember/no-jquery */
 
 import { action } from '@ember/object';
-import { run } from '@ember/runloop';
 import { isEmpty } from '@ember/utils';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
@@ -153,9 +152,6 @@ export default class DateRangePicker extends Component {
   willDestroy() {
     // Remove the hidden dropdown when this component is destroyed
     super.willDestroy(...arguments);
-    super.willDestroy(...arguments);
-
-    run.cancel(this._setupTimer);
 
     if (this.removeDropdownOnDestroy) {
       $('.daterangepicker').remove();
