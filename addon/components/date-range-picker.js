@@ -29,6 +29,8 @@ export default class DateRangePicker extends Component {
 
   // Options: Range
   @tracked singleDatePicker = this.args.singleDatePicker || false;  // Whether to only select a single date (instead of the default two)
+  @tracked start = this.args.start || undefined;
+  @tracked end = this.args.end || undefined;
   @tracked minDate = this.args.minDate || undefined;  // Lowest possible date. If undefined, no limit is set
   @tracked maxDate = this.args.maxDate || undefined;  // Highest possible date. If undefined, no limit is set
   @tracked datelimit = this.args.datelimit || false;
@@ -61,7 +63,6 @@ export default class DateRangePicker extends Component {
   @tracked showWeekNumbers = this.args.showWeekNumbers || false;
   @tracked showDropdowns = this.args.showDropdowns || false;
   
-
   // Options: Classes
   @tracked containerClass = this.args.containerClass || 'form-group au-c-content ';  // Class for the container
   @tracked inputClass = this.args.inputClass || 'form-control';  // Class for the input
@@ -77,7 +78,7 @@ export default class DateRangePicker extends Component {
   @tracked timePickerIncrement = this.args.timePickerIncrement || undefined;
 
   // Options: Dom behaviour
-  @tracked autoUpdateInput = this.args.autoUpdateInput || true;
+  @tracked autoUpdateInput = this.args.autoUpdateInput || false;
   @tracked autoApply = this.args.autoApply || false;
   @tracked alwaysShowCalendars = this.args.alwaysShowCalendars || true;
   @tracked context = this.args.context || undefined;
@@ -97,13 +98,6 @@ export default class DateRangePicker extends Component {
     return this.inputClass
       ? 'daterangepicker-input ember-text-field ember-view' + this.inputClass
       : 'daterangepicker-input ember-text-field ember-view';
-  }
-
-  get start() {
-    return this.args.start || undefined;
-  }
-  get end() {
-    return this.args.end || undefined;
   }
 
   get width() {
@@ -238,7 +232,7 @@ export default class DateRangePicker extends Component {
     console.log(start, end);
     return start, end;
   }
-
+  
   @action attachPickerEvents() {
     $('.daterangepicker-input').on('apply.daterangepicker', (_ev, picker) => {
       this.handleDateRangePickerEvent('applyAction', picker);
@@ -265,7 +259,7 @@ export default class DateRangePicker extends Component {
       // );
       action(this, start, end);
     } else {
-      if (!this.isDestroyed) {
+      if (!this.isDestroyed && actionName === 'applyAction') {
         this.start = start;
         this.end = end;
       }
